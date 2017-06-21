@@ -1,2 +1,4 @@
 *.lnk
 *.exe
+*.lib
+*.dll
