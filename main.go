@@ -21,20 +21,21 @@ freely, subject to the following restrictions:
 package main
 
 import (
-	blt "bearlibterminal"
 	"strconv"
+
+	blt "bearlibterminal"
 )
 
 const (
-	window_x_size  = 30
-	window_y_size  = 15
-	game_title     = "r/roguelikedev"
-	base_font      = "media/Lato-Heavy.ttf"
-	base_font_size = 20
+	windowSizeX  = 30
+	windowSizeY  = 15
+	gameTitle    = "r/roguelikedev"
+	baseFont     = "media/Lato-Heavy.ttf"
+	baseFontSize = 20
 )
 
 func loopOver() {
-	/*main loop of the game*/
+	/*Function loopOver is main loop of the game.*/
 	blt.Print(4, 7, "Hello, r/roguelikedev!")
 	for {
 		blt.Refresh()
@@ -48,21 +49,22 @@ func loopOver() {
 }
 
 func main() {
-	/*initializes main loop; when loop breaks, closes blt console*/
+	/*Function main initializes main loop;
+	when loop breaks, closes blt console.*/
 	loopOver()
 	blt.Close()
 }
 
 func init() {
-	/*app initialization
-	starts by setting blt console properties*/
+	/*It's app initialization.
+	Starts by setting blt console properties.*/
 	blt.Open()
-	size_x, size_y := strconv.Itoa(window_x_size), strconv.Itoa(window_y_size)
-	size := "size=" + size_x + "x" + size_y
-	title := "title='" + game_title + "'"
+	sizeX, sizeY := strconv.Itoa(windowSizeX), strconv.Itoa(windowSizeY)
+	size := "size=" + sizeX + "x" + sizeY
+	title := "title='" + gameTitle + "'"
 	window := "window: " + size + "," + title
-	font_size := "size=" + strconv.Itoa(base_font_size)
-	font := "font: " + base_font + ", " + font_size
+	fontSize := "size=" + strconv.Itoa(baseFontSize)
+	font := "font: " + baseFont + ", " + fontSize
 	blt.Set(window + "; " + font)
 	blt.Clear()
 }
