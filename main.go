@@ -34,6 +34,7 @@ const (
 )
 
 func loopOver() {
+	/*main loop of the game*/
 	blt.Print(4, 7, "Hello, r/roguelikedev!")
 	for {
 		blt.Refresh()
@@ -47,6 +48,7 @@ func loopOver() {
 }
 
 func main() {
+	/*initializes main loop; when loop breaks, closes blt console*/
 	loopOver()
 	blt.Close()
 }
