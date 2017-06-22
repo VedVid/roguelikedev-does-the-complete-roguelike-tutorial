@@ -1,8 +1,6 @@
-[TOC]
-
 # r/roguelikedev
 
-## Introduction
+## Introduction.
 
 `first draft`
 
@@ -12,7 +10,7 @@ First of all, I'm not experienced Go developer. I suppose that my code will be n
 
 It's not supposed to be tutorial. Just some writeups.
 
-## Part 0 - set environment up
+## Part 0 - set environment up.
 
 `first draft`
 
@@ -38,7 +36,7 @@ Well, it's easier to say what Python and Go have in common, because these langua
 Libtcod is, say, *full* roguelike toolkit. It provides display handling, FOV and pathfinding algorithms, etc.  
 BearLibTerminal is all about display, but handles it in different manner; for example, there is native support for True / Open Type Fonts, while libtcod relies on bitmaps.
 
-### Let's print some dummy code
+### Let's print some dummy code.
 
 `first draft`
 
