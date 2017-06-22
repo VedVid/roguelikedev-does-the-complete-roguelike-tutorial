@@ -11,3 +11,7 @@ Unfortunately, I didn't manage to set up libtcod bindings.
     - Put BearLibTerminal's .so, or .dll and .lib, or .dylib into GCC/lib directory, and into game sources directory
     - Copy BearLibTerminal.go and BearLibTerminal.h into your GOPATH.
     - Execute $go build main.go
+
+3. Other participants that use Go
+    - https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial
+    - https://github.com/dqnx/roguelikedev-does-the-complete-roguelike-tutorial
