@@ -18,5 +18,5 @@ Unfortunately, I didn't manage to set up libtcod bindings.
 
 ## Other participants that use Go
 
-[jcerise](https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial)
+[jcerise](https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial)  
 [dqnx](https://github.com/dqnx/roguelikedev-does-the-complete-roguelike-tutorial)
