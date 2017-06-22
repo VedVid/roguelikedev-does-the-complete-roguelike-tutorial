@@ -4,7 +4,9 @@
 
 ## Basic info
 
-I'm using [Go programming language](https://golang.org/) and [BearLibTerminal](https://bitbucket.org/cfyzium/bearlibterminal/overview) library.
+I'm using [Go programming language](https://golang.org/) and [BearLibTerminal](https://bitbucket.org/cfyzium/bearlibterminal/overview) library.  
+My intention is to mimic [roguebasin python+libtcod roguelike tutorial](http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod) as close as possible.  
+Unfortunately, I didn't manage to set up libtcod bindings.
 
 ## Compilation
 

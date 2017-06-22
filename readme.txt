@@ -2,6 +2,8 @@ This game is part of r/RoguelikeDev Does The Complete Roguelike Tutorial game ja
 
 1. Basic info
 I'm using Go programming language (www.golang.org) and BearLibTerminal library (https://bitbucket.org/cfyzium/bearlibterminal/).
+My intention is to mimic roguebasin python+libtcod roguelike tutorial ( http://www.roguebasin.com/index.php?title=Complete_Roguelike_Tutorial,_using_python%2Blibtcod ) as close as possible.  
+Unfortunately, I didn't manage to set up libtcod bindings.
 
 2. Compilation
     - Get and install Go programming language and GCC / MinGW (architecture version must match, ie 64-bit Go needs 64-bit GCC)
