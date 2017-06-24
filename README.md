@@ -25,6 +25,7 @@ Check out [wiki](https://github.com/VedVid/roguelikedev-does-the-complete-roguel
 
 ## Other participants that use BearLibTerminal
 
+[Aukustus](https://github.com/Aukustus/roguelikedev-does-the-complete-roguelike-tutorial)  
 [dqnx](https://github.com/dqnx/roguelikedev-does-the-complete-roguelike-tutorial)  
 [jcerise](https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial)  
 [mapisoft](https://github.com/mapisoft/roguelike-tutorial-ruby-bearlibterminal)  

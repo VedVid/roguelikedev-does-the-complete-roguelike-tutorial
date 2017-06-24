@@ -15,3 +15,11 @@ Unfortunately, I didn't manage to set up libtcod bindings.
 3. Other participants that use Go
     - https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial
     - https://github.com/dqnx/roguelikedev-does-the-complete-roguelike-tutorial
+
+4. Other participants that use BearLibTerminal
+    - https://github.com/Aukustus/roguelikedev-does-the-complete-roguelike-tutorial
+    - https://github.com/dqnx/roguelikedev-does-the-complete-roguelike-tutorial
+    - https://github.com/jcerise/roguelikedev-does-the-complete-roguelike-tutorial
+    - https://github.com/mapisoft/roguelike-tutorial-ruby-bearlibterminal
+    - https://github.com/NoahTheDuke/roguelikedev-does-the-complete-roguelike-tutorial
+    - https://github.com/Zireael07/roguelikedev-does-the-complete-roguelike-tutorial
