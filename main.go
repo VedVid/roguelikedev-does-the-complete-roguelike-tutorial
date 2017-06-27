@@ -86,6 +86,9 @@ func makeMap() {
 		}
 	}
 	board = newMap
+	ny := 5
+	nx := 5
+	board[ny][nx].blocked = true
 }
 
 func handleKeys(key int) {
