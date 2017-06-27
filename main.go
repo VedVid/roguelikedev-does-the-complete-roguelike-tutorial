@@ -94,9 +94,11 @@ func renderAll() {
 		for x := 0; x < mapSizeX; x++ {
 			wall = board[y][x].blocked
 			if wall == true {
-				blt.Print(x, y, "#")
+				txt := "[color=colorDarkWall]#"
+				blt.Print(x, y, txt)
 			} else {
-				blt.Print(x, y, ".")
+				txt := "[color=colorDarkGround]."
+				blt.Print(x, y, txt)
 			}
 		}
 	}
@@ -141,6 +143,7 @@ func loopOver() {
 func main() {
 	/*Function main initializes main loop;
 	when loop breaks, closes blt console.*/
+	renderAll()
 	loopOver()
 	blt.Close()
 }
@@ -156,6 +159,7 @@ func init() {
 	fontSize := "size=" + strconv.Itoa(baseFontSize)
 	font := "font: " + baseFont + ", " + fontSize
 	blt.Set(window + "; " + font)
+	blt.Set("palette: colorDarkWall = #000064, colorDarkGround = #323296")
 	blt.Clear()
 	player = &Object{0, windowSizeX / 2, windowSizeY / 2, "@", "white"}
 	objects = append(objects, player)
