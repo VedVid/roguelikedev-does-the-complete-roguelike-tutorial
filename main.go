@@ -91,6 +91,24 @@ func makeMap() {
 	board[ny][nx].blocked = true
 }
 
+func renderAll() {
+	var wall bool
+	for y := 0; y < mapSizeY; y++ {
+		for x := 0; x < mapSizeX; x++ {
+			wall = board[y][x].blocked
+			if wall == true {
+				blt.Print(x, y, "#")
+			} else {
+				blt.Print(x, y, ".")
+			}
+		}
+	}
+	for j := 0; j < len(objects); j++ {
+		n := objects[j]
+		n.draw()
+	}
+}
+
 func handleKeys(key int) {
 	/*Function handleKeys allows to control player character
 	by reading input from main loop*/
@@ -119,10 +137,7 @@ func loopOver() {
 		} else {
 			handleKeys(key)
 		}
-		for j := 0; j < len(objects); j++ {
-			n := objects[j]
-			n.draw()
-		}
+		renderAll()
 	}
 }
 
