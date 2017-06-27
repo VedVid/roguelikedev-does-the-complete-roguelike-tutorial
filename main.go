@@ -54,13 +54,14 @@ func (obj *Object) move(dx, dy int) {
 }
 
 func (obj *Object) draw(layer, x, y int, ch string) {
-	/*It is method that clears old Objects position on specified layer
-	then prints their symbols on new coords*/
+	/*It is method that prints Objects
+	on specified positions on specified layer*/
 	blt.Layer(layer)
 	blt.Print(x, y, ch)
 }
 
 func (obj *Object) clear(layer, x, y, w, h int) {
+	/*It is method that clears Objects position on specified layer*/
 	blt.Layer(layer)
 	blt.ClearArea(x, y, w, h)
 }
