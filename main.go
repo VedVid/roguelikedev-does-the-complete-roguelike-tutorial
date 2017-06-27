@@ -57,7 +57,8 @@ func (obj *Object) draw() {
 	/*draw is method that prints Objects
 	on specified positions on specified layer*/
 	blt.Layer(obj.layer)
-	blt.Print(obj.x, obj.y, obj.char)
+	ch := "[color=" + obj.color + "]" + obj.char
+	blt.Print(obj.x, obj.y, ch)
 }
 
 func (obj *Object) clear() {
