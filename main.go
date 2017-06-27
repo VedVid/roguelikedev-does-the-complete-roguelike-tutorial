@@ -86,9 +86,6 @@ func makeMap() {
 		}
 	}
 	board = newMap
-	ny := 1
-	nx := 3
-	board[ny][nx].blocked = true
 }
 
 func renderAll() {
