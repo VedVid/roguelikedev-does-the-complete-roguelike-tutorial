@@ -122,4 +122,5 @@ func init() {
 	blt.Clear()
 	player = &Object{0, windowSizeX / 2, windowSizeY / 2, "@", "white"}
 	objects = append(objects, player)
+	player.draw(player.layer, player.x, player.y, player.char)
 }
