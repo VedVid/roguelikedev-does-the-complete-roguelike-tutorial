@@ -61,7 +61,7 @@ func (obj *Object) draw() {
 }
 
 func (obj *Object) clear() {
-	/*It is method that clears Objects position on specified layer*/
+	/*clear is method that clears area starting from coords on specific layer*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
