@@ -34,16 +34,34 @@ const (
 	baseFontSize = 20
 )
 
+var (
+	playerX = windowSizeX / 2
+	playerY = windowSizeY / 2
+)
+
+func handleKeys(key int) {
+	/*Function handleKeys allows to control player character*/
+	if key == blt.TK_UP {
+		playerY--
+	} else if key == blt.TK_DOWN {
+		playerY++
+	} else if key == blt.TK_LEFT {
+		playerX--
+	} else if key == blt.TK_RIGHT {
+		playerX++
+	}
+}
+
 func loopOver() {
 	/*Function loopOver is main loop of the game.*/
 	blt.Print(4, 7, "Hello, r/roguelikedev!")
 	for {
 		blt.Refresh()
 		key := blt.Read()
-		if key != blt.TK_CLOSE {
-			continue
-		} else {
+		if key == blt.TK_CLOSE || key == blt.TK_ESCAPE {
 			break
+		} else {
+			handleKeys(key)
 		}
 	}
 }
