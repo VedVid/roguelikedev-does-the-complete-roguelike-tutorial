@@ -21,6 +21,7 @@ freely, subject to the following restrictions:
 package main
 
 import (
+	"fmt"
 	"strconv"
 
 	blt "bearlibterminal"
@@ -28,7 +29,9 @@ import (
 
 const (
 	windowSizeX  = 30
-	windowSizeY  = 15
+	windowSizeY  = 20
+	mapSizeX     = windowSizeX
+	mapSizeY     = windowSizeY - 5
 	gameTitle    = "r/roguelikedev"
 	baseFont     = "media/Lato-Heavy.ttf"
 	baseFontSize = 20
@@ -37,6 +40,7 @@ const (
 var (
 	player  *Object
 	objects []*Object
+	board   [][]*Tile
 )
 
 type Object struct {
@@ -44,6 +48,11 @@ type Object struct {
 	x, y  int
 	char  string
 	color string
+}
+
+type Tile struct {
+	blocked      bool
+	blocks_sight bool
 }
 
 func (obj *Object) move(dx, dy int) {
@@ -65,6 +74,15 @@ func (obj *Object) clear() {
 	/*clear is method that clears area starting from coords on specific layer*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
+}
+
+func makeMap() {
+	newMap := make([][]*Tile, mapSizeY)
+	for i := range newMap {
+		newMap[i] = make([]*Tile, mapSizeX)
+	}
+	board = newMap
+	fmt.Println(board)
 }
 
 func handleKeys(key int) {
