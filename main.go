@@ -21,7 +21,6 @@ freely, subject to the following restrictions:
 package main
 
 import (
-	"fmt"
 	"strconv"
 
 	blt "bearlibterminal"
@@ -82,7 +81,6 @@ func makeMap() {
 		newMap[i] = make([]*Tile, mapSizeX)
 	}
 	board = newMap
-	fmt.Println(board)
 }
 
 func handleKeys(key int) {
