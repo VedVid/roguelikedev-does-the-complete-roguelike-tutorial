@@ -82,7 +82,11 @@ func makeMap() {
 	}
 	for x := 0; x < mapSizeX; x++ {
 		for y := 0; y < mapSizeY; y++ {
-			newMap[y][x] = &Tile{false, false}
+			if y == 0 || y == mapSizeY-1 || x == 0 || x == mapSizeX-1 {
+				newMap[y][x] = &Tile{true, true}
+			} else {
+				newMap[y][x] = &Tile{false, false}
+			}
 		}
 	}
 	board = newMap
