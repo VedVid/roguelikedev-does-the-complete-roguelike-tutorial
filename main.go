@@ -70,13 +70,13 @@ func handleKeys(key int) {
 	/*Function handleKeys allows to control player character
 	by reading input from main loop*/
 	if key == blt.TK_UP {
-		player.y--
+		player.move(0, -1)
 	} else if key == blt.TK_DOWN {
-		player.y++
+		player.move(0, 1)
 	} else if key == blt.TK_LEFT {
-		player.x--
+		player.move(-1, 0)
 	} else if key == blt.TK_RIGHT {
-		player.x++
+		player.move(1, 0)
 	}
 }
 
