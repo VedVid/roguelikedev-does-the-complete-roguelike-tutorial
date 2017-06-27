@@ -40,7 +40,8 @@ var (
 )
 
 func handleKeys(key int) {
-	/*Function handleKeys allows to control player character*/
+	/*Function handleKeys allows to control player character
+	by reading input from main loop*/
 	if key == blt.TK_UP {
 		playerY--
 	} else if key == blt.TK_DOWN {
@@ -53,8 +54,8 @@ func handleKeys(key int) {
 }
 
 func printPlayer() {
-	/*Function printPlaer clears old player position
-	then prints player symbol on new coord*/
+	/*Function printPlayer clears old player position on its layer
+	then prints player symbol on new coords*/
 	blt.Layer(0)
 	blt.ClearArea(0, 0, windowSizeX, windowSizeY)
 	blt.Print(playerX, playerY, "@")
