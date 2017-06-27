@@ -80,6 +80,11 @@ func makeMap() {
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeX)
 	}
+	for x := 0; x < mapSizeX; x++ {
+		for y := 0; y < mapSizeY; y++ {
+			newMap[y][x] = &Tile{false, false}
+		}
+	}
 	board = newMap
 }
 
@@ -140,4 +145,5 @@ func init() {
 	player = &Object{0, windowSizeX / 2, windowSizeY / 2, "@", "white"}
 	objects = append(objects, player)
 	player.draw()
+	makeMap()
 }
