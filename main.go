@@ -47,23 +47,23 @@ type Object struct {
 }
 
 func (obj *Object) move(dx, dy int) {
-	/*move is method for handling objetcs movement;
+	/*move is method for handling objects movement;
 	it receives pointer to object, and adds arguments to object values*/
 	obj.x += dx
 	obj.y += dy
 }
 
-func (obj *Object) draw(layer, x, y int, ch string) {
-	/*It is method that prints Objects
+func (obj *Object) draw() {
+	/*draw is method that prints Objects
 	on specified positions on specified layer*/
-	blt.Layer(layer)
-	blt.Print(x, y, ch)
+	blt.Layer(obj.layer)
+	blt.Print(obj.x, obj.y, obj.char)
 }
 
-func (obj *Object) clear(layer, x, y, w, h int) {
+func (obj *Object) clear() {
 	/*It is method that clears Objects position on specified layer*/
-	blt.Layer(layer)
-	blt.ClearArea(x, y, w, h)
+	blt.Layer(obj.layer)
+	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
 func handleKeys(key int) {
@@ -87,7 +87,7 @@ func loopOver() {
 		key := blt.Read()
 		for i := 0; i < len(objects); i++ {
 			n := objects[i]
-			n.clear(n.layer, n.x, n.y, 1, 1)
+			n.clear()
 		}
 		if key == blt.TK_CLOSE || key == blt.TK_ESCAPE {
 			break
@@ -96,7 +96,7 @@ func loopOver() {
 		}
 		for j := 0; j < len(objects); j++ {
 			n := objects[j]
-			n.draw(n.layer, n.x, n.y, n.char)
+			n.draw()
 		}
 	}
 }
@@ -122,5 +122,5 @@ func init() {
 	blt.Clear()
 	player = &Object{0, windowSizeX / 2, windowSizeY / 2, "@", "white"}
 	objects = append(objects, player)
-	player.draw(player.layer, player.x, player.y, player.char)
+	player.draw()
 }
