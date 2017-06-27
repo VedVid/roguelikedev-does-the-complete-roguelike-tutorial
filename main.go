@@ -52,9 +52,16 @@ func handleKeys(key int) {
 	}
 }
 
+func printPlayer() {
+	/*Function printPlaer clears old player position
+	then prints player symbol on new coord*/
+	blt.Layer(0)
+	blt.ClearArea(0, 0, windowSizeX, windowSizeY)
+	blt.Print(playerX, playerY, "@")
+}
+
 func loopOver() {
 	/*Function loopOver is main loop of the game.*/
-	blt.Print(4, 7, "Hello, r/roguelikedev!")
 	for {
 		blt.Refresh()
 		key := blt.Read()
@@ -62,6 +69,7 @@ func loopOver() {
 			break
 		} else {
 			handleKeys(key)
+			printPlayer()
 		}
 	}
 }
