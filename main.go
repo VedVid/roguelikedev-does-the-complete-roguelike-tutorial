@@ -86,8 +86,8 @@ func makeMap() {
 		}
 	}
 	board = newMap
-	ny := 5
-	nx := 5
+	ny := 1
+	nx := 3
 	board[ny][nx].blocked = true
 }
 
