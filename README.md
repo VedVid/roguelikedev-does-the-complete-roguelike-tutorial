@@ -1,4 +1,4 @@
-# This game is part of r/RoguelikeDev Does The Complete Roguelike Tutorial game jam hosted by [aaron_ds](https://www.reddit.com/user/aaron_ds) on [roguelikedev](www.reddit/com/r/roguelikedev)
+# This game is part of r/RoguelikeDev Does The Complete Roguelike Tutorial game jam hosted by [aaron_ds](https://www.reddit.com/user/aaron_ds) on [roguelikedev](https://www.reddit.com/r/roguelikedev/)
 
 ![RoguelikeDev Does the Complete Roguelike Tutorial Event Logo](https://i.imgur.com/ksc9EW3.png)
 
