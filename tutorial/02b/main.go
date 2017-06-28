@@ -78,6 +78,8 @@ func (obj *Object) clear() {
 }
 
 func makeMap() {
+	/*Function makeMap creates dungeon map by
+	creating empty 2d array then filling it by Tiles*/
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
@@ -95,6 +97,9 @@ func makeMap() {
 }
 
 func renderAll() {
+	/*Function renderAll handles display;
+	draws floors and walls with regard to board[x][y] *Tile, then
+	use (obj *Object) draw() method with list of game objects*/
 	var wall bool
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
