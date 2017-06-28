@@ -57,7 +57,7 @@ type Tile struct {
 func (obj *Object) move(dx, dy int) {
 	/*move is method for handling objects movement;
 	it receives pointer to object, and adds arguments to object values*/
-	if board[obj.y+dy][obj.x+dx].blocked == false {
+	if board[obj.x+dx][obj.y+dy].blocked == false {
 		obj.x += dx
 		obj.y += dy
 	}
@@ -78,16 +78,16 @@ func (obj *Object) clear() {
 }
 
 func makeMap() {
-	newMap := make([][]*Tile, mapSizeY)
+	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
-		newMap[i] = make([]*Tile, mapSizeX)
+		newMap[i] = make([]*Tile, mapSizeY)
 	}
 	for x := 0; x < mapSizeX; x++ {
 		for y := 0; y < mapSizeY; y++ {
 			if y == 0 || y == mapSizeY-1 || x == 0 || x == mapSizeX-1 {
-				newMap[y][x] = &Tile{true, true}
+				newMap[x][y] = &Tile{true, true}
 			} else {
-				newMap[y][x] = &Tile{false, false}
+				newMap[x][y] = &Tile{false, false}
 			}
 		}
 	}
@@ -98,7 +98,7 @@ func renderAll() {
 	var wall bool
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
-			wall = board[y][x].blocked
+			wall = board[x][y].blocked
 			if wall == true {
 				txt := "[color=colorDarkWall]#"
 				blt.Print(x, y, txt)
