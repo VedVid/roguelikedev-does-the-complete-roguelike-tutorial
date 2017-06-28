@@ -55,8 +55,9 @@ type Tile struct {
 }
 
 func (obj *Object) move(dx, dy int) {
-	/*move is method for handling objects movement;
-	it receives pointer to object, and adds arguments to object values*/
+	/* move is method for handling objects movement;
+	   it receives pointer to object, then checks cell for blocked field,
+	   and adds arguments to object values if tile is passable*/
 	if board[obj.x+dx][obj.y+dy].blocked == false {
 		obj.x += dx
 		obj.y += dy
