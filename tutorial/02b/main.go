@@ -101,11 +101,9 @@ func renderAll() {
 	/*Function renderAll handles display;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
-	var wall bool
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
-			wall = board[x][y].blocked
-			if wall == true {
+			if board[x][y].blocked == true {
 				txt := "[color=colorDarkWall]#"
 				blt.Print(x, y, txt)
 			} else {
