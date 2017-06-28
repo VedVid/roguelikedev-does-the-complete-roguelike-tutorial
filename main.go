@@ -27,13 +27,13 @@ import (
 )
 
 const (
-	windowSizeX  = 30
-	windowSizeY  = 20
+	windowSizeX  = 80
+	windowSizeY  = 50
 	mapSizeX     = windowSizeX
 	mapSizeY     = windowSizeY - 5
 	gameTitle    = "r/roguelikedev"
 	baseFont     = "media/Lato-Heavy.ttf"
-	baseFontSize = 20
+	baseFontSize = 10
 )
 
 var (
