@@ -118,8 +118,11 @@ func init() {
 	font := "font: " + baseFont + ", " + fontSize
 	blt.Set(window + "; " + font)
 	blt.Clear()
-	player = &Object{1, mapSizeX / 2, mapSizeY / 2, "@", "white"}
-	npc := &Object{0, mapSizeX/2 - 5, mapSizeY / 2, "@", "yellow"}
+	player = &Object{1, windowSizeX / 2, windowSizeY / 2, "@", "white"}
+	npc := &Object{0, windowSizeX/2 - 5, windowSizeY / 2, "@", "yellow"}
 	objects = append(objects, player, npc)
-	player.draw()
+	for j := 0; j < len(objects); j++ {
+		n := objects[j]
+		n.draw()
+	}
 }
