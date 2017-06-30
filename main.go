@@ -171,8 +171,9 @@ func init() {
 	blt.Set(window + "; " + font)
 	blt.Set("palette: colorDarkWall = #000064, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{0, mapSizeX / 2, mapSizeY / 2, "@", "white"}
-	objects = append(objects, player)
+	player = &Object{1, mapSizeX / 2, mapSizeY / 2, "@", "white"}
+	npc := &Object{0, mapSizeX/2 - 5, mapSizeY / 2, "@", "yellow"}
+	objects = append(objects, player, npc)
 	player.draw()
 	makeMap()
 }
