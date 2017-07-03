@@ -213,6 +213,5 @@ func init() {
 	player = &Object{1, mapSizeX / 2, mapSizeY / 2, "@", "white"}
 	npc := &Object{0, mapSizeX/2 - 5, mapSizeY / 2, "@", "yellow"}
 	objects = append(objects, player, npc)
-	player.draw()
 	makeMap()
 }
