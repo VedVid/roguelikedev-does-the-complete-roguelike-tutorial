@@ -89,16 +89,16 @@ func (obj *Object) clear() {
 }
 
 func (room *Rect) center() (cx, cy int) {
-	centerX := (room.x + room.h) / 2
-	centerY := (room.y + room.w) / 2
+	centerX := (room.x + (room.x + room.h)) / 2
+	centerY := (room.y + (room.y + room.w)) / 2
 	return centerX, centerY
 }
 
 func (room *Rect) intersect(other *Rect) (overlap bool) {
-	cond1 := (room.x <= other.x+other.h)
-	cond2 := (room.x+room.h >= other.x)
-	cond3 := (room.y <= other.y+other.w)
-	cond4 := (room.y+room.w >= other.y)
+	cond1 := (room.x <= other.x+other.w)
+	cond2 := (room.x+room.w >= other.x)
+	cond3 := (room.y <= other.y+other.h)
+	cond4 := (room.y+room.h >= other.y)
 	return (cond1 && cond2 && cond3 && cond4)
 }
 
@@ -149,8 +149,8 @@ func makeMap() {
 	board = newMap
 	numRooms := 0
 	for i := 0; i < maxRooms; i++ {
-		w := rand.Intn(roomMaxSize-roomMinSize) + roomMaxSize
-		h := rand.Intn(roomMaxSize-roomMinSize) + roomMaxSize
+		w := rand.Intn(roomMaxSize-roomMinSize) + roomMinSize
+		h := rand.Intn(roomMaxSize-roomMinSize) + roomMinSize
 		x := rand.Intn(mapSizeX - w - 1)
 		y := rand.Intn(mapSizeY - h - 1)
 		newRoom := &Rect{x, y, w, h}
