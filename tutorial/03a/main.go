@@ -83,6 +83,20 @@ func (obj *Object) clear() {
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
 func createRoom(room Rect) {
 	/*Function createRoom uses Rect struct for
 	marking specific area as passable;
@@ -99,7 +113,7 @@ func createRoom(room Rect) {
 func horizontalTunnel(x1, x2, y int) {
 	/*Function horizontalTunnel carves passable area
 	from x1 to x2 on y row*/
-	for x := x1; x < x2+1; x++ {
+	for x := min(x1, x2); x < max(x1, x2)+1; x++ {
 		board[x][y].blocked = false
 		board[x][y].blocks_sight = false
 	}
@@ -108,7 +122,7 @@ func horizontalTunnel(x1, x2, y int) {
 func verticalTunnel(y1, y2, x int) {
 	/*Function verticalTunnel carves passable area
 	from y1 to y2 on x column*/
-	for y := y1; y < y2+1; y++ {
+	for y := min(y1, y2); y < max(y1, y2)+1; y++ {
 		board[x][y].blocked = false
 		board[x][y].blocks_sight = false
 	}
