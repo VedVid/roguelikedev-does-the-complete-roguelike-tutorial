@@ -172,24 +172,16 @@ func makeMap() {
 				prevX, prevY := rooms[numRooms-1].center()
 				if rand.Intn(1) == 1 {
 					horizontalTunnel(prevX, newX, prevY)
-					verticalTunnel(prevY, newY, prevX)
+					verticalTunnel(prevY, newY, newX)
 				} else {
 					verticalTunnel(prevY, newY, prevX)
-					horizontalTunnel(prevX, newX, prevY)
+					horizontalTunnel(prevX, newX, newY)
 				}
 			}
 			rooms = append(rooms, newRoom)
 			numRooms++
 		}
 	}
-
-	room1 := &Rect{20, 15, 10, 15}
-	room2 := &Rect{50, 15, 10, 15}
-	createRoom(room1)
-	createRoom(room2)
-	horizontalTunnel(25, 55, 23)
-	player.x = 25
-	player.y = 23
 }
 
 func renderAll() {
