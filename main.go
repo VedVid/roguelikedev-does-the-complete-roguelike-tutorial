@@ -21,7 +21,9 @@ freely, subject to the following restrictions:
 package main
 
 import (
+	"math/rand"
 	"strconv"
+	"time"
 
 	blt "bearlibterminal"
 )
@@ -31,6 +33,9 @@ const (
 	windowSizeY  = 50
 	mapSizeX     = windowSizeX
 	mapSizeY     = windowSizeY - 5
+	roomMaxSize  = 10
+	roomMinSize  = 6
+	maxRooms     = 30
 	gameTitle    = "r/roguelikedev"
 	baseFont     = "media/Lato-Heavy.ttf"
 	baseFontSize = 10
@@ -83,7 +88,21 @@ func (obj *Object) clear() {
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
-func createRoom(room Rect) {
+func (room *Rect) center() (cx, cy int) {
+	centerX := (room.x + room.h) / 2
+	centerY := (room.y + room.w) / 2
+	return centerX, centerY
+}
+
+func (room *Rect) intersect(other *Rect) (overlap bool) {
+	cond1 := (room.x <= other.x+other.h)
+	cond2 := (room.x+room.h >= other.x)
+	cond3 := (room.y <= other.y+other.w)
+	cond4 := (room.y+room.w >= other.y)
+	return (cond1 && cond2 && cond3 && cond4)
+}
+
+func createRoom(room *Rect) {
 	/*Function createRoom uses Rect struct for
 	marking specific area as passable;
 	takes initial [x][y]cell and width, height of room,
@@ -117,6 +136,7 @@ func verticalTunnel(y1, y2, x int) {
 func makeMap() {
 	/*Function makeMap creates dungeon map by
 	creating empty 2d array then filling it by Tiles*/
+	var rooms []*Rect
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
@@ -127,8 +147,44 @@ func makeMap() {
 		}
 	}
 	board = newMap
-	room1 := Rect{20, 15, 10, 15}
-	room2 := Rect{50, 15, 10, 15}
+	numRooms := 0
+	for i := 0; i < maxRooms; i++ {
+		w := rand.Intn(roomMaxSize-roomMinSize) + roomMaxSize
+		h := rand.Intn(roomMaxSize-roomMinSize) + roomMaxSize
+		x := rand.Intn(mapSizeX - w - 1)
+		y := rand.Intn(mapSizeY - h - 1)
+		newRoom := &Rect{x, y, w, h}
+		failed := false
+		for j := 0; j < len(rooms); j++ {
+			otherRoom := rooms[j]
+			if newRoom.intersect(otherRoom) == true {
+				failed = true
+				break
+			}
+		}
+		if failed == false {
+			createRoom(newRoom)
+			newX, newY := newRoom.center()
+			if numRooms == 0 {
+				player.x = newX
+				player.y = newY
+			} else {
+				prevX, prevY := rooms[numRooms-1].center()
+				if rand.Intn(1) == 1 {
+					horizontalTunnel(prevX, newX, prevY)
+					verticalTunnel(prevY, newY, prevX)
+				} else {
+					verticalTunnel(prevY, newY, prevX)
+					horizontalTunnel(prevX, newX, prevY)
+				}
+			}
+			rooms = append(rooms, newRoom)
+			numRooms++
+		}
+	}
+
+	room1 := &Rect{20, 15, 10, 15}
+	room2 := &Rect{50, 15, 10, 15}
 	createRoom(room1)
 	createRoom(room2)
 	horizontalTunnel(25, 55, 23)
@@ -200,6 +256,7 @@ func main() {
 func init() {
 	/*It's app initialization.
 	Starts by setting blt console properties.*/
+	rand.Seed(time.Now().Unix())
 	blt.Open()
 	sizeX, sizeY := strconv.Itoa(windowSizeX), strconv.Itoa(windowSizeY)
 	size := "size=" + sizeX + "x" + sizeY
