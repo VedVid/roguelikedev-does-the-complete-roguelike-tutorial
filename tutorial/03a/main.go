@@ -50,8 +50,8 @@ type Object struct {
 }
 
 type Tile struct {
-	blocked      bool
-	blocks_sight bool
+	blocked     bool
+	blocksSight bool
 }
 
 type Rect struct {
@@ -105,7 +105,7 @@ func createRoom(room Rect) {
 	for x := room.x + 1; x < room.x+room.w; x++ {
 		for y := room.y + 1; y < room.y+room.h; y++ {
 			board[x][y].blocked = false
-			board[x][y].blocks_sight = false
+			board[x][y].blocksSight = false
 		}
 	}
 }
@@ -115,7 +115,7 @@ func horizontalTunnel(x1, x2, y int) {
 	from x1 to x2 on y row*/
 	for x := min(x1, x2); x < max(x1, x2)+1; x++ {
 		board[x][y].blocked = false
-		board[x][y].blocks_sight = false
+		board[x][y].blocksSight = false
 	}
 }
 
@@ -124,7 +124,7 @@ func verticalTunnel(y1, y2, x int) {
 	from y1 to y2 on x column*/
 	for y := min(y1, y2); y < max(y1, y2)+1; y++ {
 		board[x][y].blocked = false
-		board[x][y].blocks_sight = false
+		board[x][y].blocksSight = false
 	}
 }
 
