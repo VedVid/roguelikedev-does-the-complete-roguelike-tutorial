@@ -21,7 +21,6 @@ freely, subject to the following restrictions:
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"strconv"
 	"time"
@@ -212,7 +211,6 @@ func mapBSP() {
 
 func mapMazeRuins() {
 	newMap := make([][]*Tile, mapSizeX)
-	fmt.Println(newMap)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
 	}
