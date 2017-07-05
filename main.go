@@ -148,8 +148,10 @@ func verticalTunnel(y1, y2, x int) {
 }
 
 func makeMap() {
-	/*Function makeMap creates dungeon map by
-	creating empty 2d array then filling it by Tiles*/
+	/*Function makeMap creates dungeon map by:
+	- creating empty 2d array then filling it by Tiles;
+	- creating new room that doesn't overlap other rooms;
+	- connetcs rooms using tunnels*/
 	var rooms []*Rect
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
