@@ -89,12 +89,16 @@ func (obj *Object) clear() {
 }
 
 func (room *Rect) center() (cx, cy int) {
+	/*center is method that gets center cell of room*/
 	centerX := (room.x + (room.x + room.h)) / 2
 	centerY := (room.y + (room.y + room.w)) / 2
 	return centerX, centerY
 }
 
-func (room *Rect) intersect(other *Rect) (overlap bool) {
+func (room *Rect) intersect(other *Rect) bool {
+	/*intersect is method that checks by coordinates comparison
+	if rooms (room and other) are not overlapping;
+	returns true or false*/
 	cond1 := (room.x <= other.x+other.w)
 	cond2 := (room.x+room.w >= other.x)
 	cond3 := (room.y <= other.y+other.h)
@@ -151,7 +155,7 @@ func makeMap() {
 	/*Function makeMap creates dungeon map by:
 	- creating empty 2d array then filling it by Tiles;
 	- creating new room that doesn't overlap other rooms;
-	- connetcs rooms using tunnels*/
+	- connects rooms using tunnels*/
 	var rooms []*Rect
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
@@ -186,7 +190,7 @@ func makeMap() {
 				player.y = newY
 			} else {
 				prevX, prevY := rooms[numRooms-1].center()
-				if rand.Intn(1) == 1 {
+				if rand.Intn(1+1) == 1 {
 					horizontalTunnel(prevX, newX, prevY)
 					verticalTunnel(prevY, newY, newX)
 				} else {
