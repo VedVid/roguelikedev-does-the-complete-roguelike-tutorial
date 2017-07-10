@@ -120,6 +120,10 @@ func max(a, b int) int {
 	return b
 }
 
+func randIntRange(a, b int) int {
+	return rand.Intn(b-a) + a
+}
+
 func createRoom(room *Rect) {
 	/*Function createRoom uses Rect struct for
 	marking specific area as passable;
@@ -169,8 +173,8 @@ func makeMap() {
 	board = newMap
 	numRooms := 0
 	for i := 0; i < maxRooms; i++ {
-		w := rand.Intn(roomMaxSize-roomMinSize) + roomMinSize
-		h := rand.Intn(roomMaxSize-roomMinSize) + roomMinSize
+		w := randIntRange(roomMinSize, roomMaxSize)
+		h := randIntRange(roomMinSize, roomMaxSize)
 		x := rand.Intn(mapSizeX - w - 1)
 		y := rand.Intn(mapSizeY - h - 1)
 		newRoom := &Rect{x, y, w, h}
