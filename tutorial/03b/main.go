@@ -107,6 +107,7 @@ func (room *Rect) intersect(other *Rect) bool {
 }
 
 func min(a, b int) int {
+	/*func min returns smaller of two integers*/
 	if a < b {
 		return a
 	}
@@ -114,6 +115,7 @@ func min(a, b int) int {
 }
 
 func max(a, b int) int {
+	/*func max returns bigger of two integers*/
 	if a > b {
 		return a
 	}
@@ -121,6 +123,8 @@ func max(a, b int) int {
 }
 
 func randIntRange(a, b int) int {
+	/*func randIntRange returns random integer withing specified range;
+	uses rand.Intn(n) from standard library that returns [0, n)*/
 	return rand.Intn(b-a) + a
 }
 
