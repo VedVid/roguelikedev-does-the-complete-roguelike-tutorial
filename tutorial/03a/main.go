@@ -84,6 +84,7 @@ func (obj *Object) clear() {
 }
 
 func min(a, b int) int {
+	/*func min returns smaller of two integers*/
 	if a < b {
 		return a
 	}
@@ -91,6 +92,7 @@ func min(a, b int) int {
 }
 
 func max(a, b int) int {
+	/*func max returns bigger of two integers*/
 	if a > b {
 		return a
 	}
