@@ -37,6 +37,7 @@ const (
 	roomMaxSize  = 10
 	roomMinSize  = 6
 	maxRooms     = 30
+	maxMonsters  = 3
 	gameTitle    = "r/roguelikedev"
 	baseFont     = "media/Lato-Heavy.ttf"
 	baseFontSize = 10
@@ -265,6 +266,21 @@ func randIntRange(a, b int) int {
 	return rand.Intn(b-a) + a
 }
 
+func placeObjects(room *Rect) {
+	numMonsters := rand.Intn(maxMonsters + 1)
+	var monster *Object
+	for i := 0; i < numMonsters; i++ {
+		x := randIntRange(room.x+1, room.x+room.w)
+		y := randIntRange(room.y+1, room.y+room.h)
+		if rand.Intn(100+1) <= 80 {
+			monster = &Object{0, x, y, "o", "dark green"}
+		} else {
+			monster = &Object{0, x, y, "T", "darker green"}
+		}
+		objects = append(objects, monster)
+	}
+}
+
 func createRoom(room *Rect) {
 	/*Function createRoom uses Rect struct for
 	marking specific area as passable;
@@ -342,6 +358,7 @@ func makeMap() {
 					verticalTunnel(prevY, newY, prevX)
 					horizontalTunnel(prevX, newX, newY)
 				}
+				placeObjects(newRoom)
 			}
 			rooms = append(rooms, newRoom)
 			numRooms++
@@ -502,7 +519,6 @@ func init() {
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
 	player = &Object{1, mapSizeX / 2, mapSizeY / 2, "@", "white"}
-	npc := &Object{0, mapSizeX/2 - 5, mapSizeY / 2, "@", "yellow"}
-	objects = append(objects, player, npc)
+	objects = append(objects, player)
 	makeMap()
 }
