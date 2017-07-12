@@ -214,7 +214,7 @@ func (room *Rect) intersect(other *Rect) bool {
 }
 
 func min(a, b int) int {
-	/*func min returns smaller of two integers*/
+	/*Function min returns smaller of two integers*/
 	if a < b {
 		return a
 	}
@@ -222,7 +222,7 @@ func min(a, b int) int {
 }
 
 func max(a, b int) int {
-	/*func max returns bigger of two integers*/
+	/*Function max returns bigger of two integers*/
 	if a > b {
 		return a
 	}
@@ -230,6 +230,8 @@ func max(a, b int) int {
 }
 
 func round64(value, rounding float64, places int) float64 {
+	/*Function round64 rounds float64 values (value) to specified
+	number of digits (places) using given point-of-rounding-up (rounding)*/
 	pow := math.Pow(10, float64(places))
 	digit := pow * value
 	_, div := math.Modf(digit)
@@ -251,6 +253,8 @@ func round64(value, rounding float64, places int) float64 {
 }
 
 func round64ToInt(value float64) int {
+	/*Function round64ToInt gets float64 value, uses round64 function,
+	then returns new value converted to integer*/
 	a := round64(value, 0.5, 0)
 	return int(a)
 }
