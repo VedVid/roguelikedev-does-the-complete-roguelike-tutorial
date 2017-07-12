@@ -267,6 +267,11 @@ func randIntRange(a, b int) int {
 }
 
 func placeObjects(room *Rect) {
+	/*Function placeObjects places monster withing specified room;
+	it gets random number of monsters to place, then for every monster:
+	- draws x, y coordinates
+	- decides type of monster
+	- adds monster to objects slice*/
 	numMonsters := rand.Intn(maxMonsters + 1)
 	var monster *Object
 	for i := 0; i < numMonsters; i++ {
