@@ -158,6 +158,7 @@ type Object struct {
 	layer  int
 	x, y   int
 	char   string
+	name   string
 	color  string
 	blocks bool
 }
@@ -299,9 +300,9 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "dark green", true}
+				monster = &Object{0, x, y, "o", "orc", "dark green", true}
 			} else {
-				monster = &Object{0, x, y, "T", "darker green", true}
+				monster = &Object{0, x, y, "T", "troll", "darker green", true}
 			}
 			objects = append(objects, monster)
 		}
@@ -545,7 +546,7 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "white", true}
+	player = &Object{1, 0, 0, "@", "player", "white", true}
 	objects = append(objects, player)
 	makeMap()
 }
