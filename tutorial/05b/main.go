@@ -269,7 +269,7 @@ func randIntRange(a, b int) int {
 }
 
 func isBlocked(x, y int) bool {
-	/*Function isBlocked cheks if map cell is blocked by wall or object;
+	/*Function isBlocked checks if map cell is blocked by wall or object;
 	returns true if cell's blocked field is set to true;
 	iterates through objects slice and
 	returns true if object's blocks field is set to true and its coordinates
@@ -288,7 +288,7 @@ func isBlocked(x, y int) bool {
 }
 
 func placeObjects(room *Rect) {
-	/*Function placeObjects places monster withing specified room;
+	/*Function placeObjects places monsters within room borders;
 	it gets random number of monsters to place, then for every monster:
 	- draws x, y coordinates
 	- decides type of monster

@@ -271,7 +271,7 @@ func randIntRange(a, b int) int {
 }
 
 func isBlocked(x, y int) bool {
-	/*Function isBlocked cheks if map cell is blocked by wall or object;
+	/*Function isBlocked checks if map cell is blocked by wall or object;
 	returns true if cell's blocked field is set to true;
 	iterates through objects slice and
 	returns true if object's blocks field is set to true and its coordinates
@@ -290,6 +290,10 @@ func isBlocked(x, y int) bool {
 }
 
 func playerMoveOrAttack(dx, dy int) {
+	/*Function playerMoveOrAttack checks cell that
+	player intend to cross for presence of monsters;
+	if monster is present, prints debug message;
+	else moves player*/
 	x := player.x + dx
 	y := player.y + dy
 	var target *Object
@@ -308,7 +312,7 @@ func playerMoveOrAttack(dx, dy int) {
 }
 
 func placeObjects(room *Rect) {
-	/*Function placeObjects places monster withing specified room;
+	/*Function placeObjects places monsters within room borders;
 	it gets random number of monsters to place, then for every monster:
 	- draws x, y coordinates
 	- decides type of monster
@@ -542,15 +546,20 @@ func loopOver() {
 		if gameState == "playing" && playerAction != "didnt-take-turn" {
 			for i := 0; i < len(objects); i++ {
 				n := objects[i]
-				if n != player {
-					fmt.Println("The", n.name, "growls!")
-				}
 				n.clear()
 			}
 		}
 		playerAction = handleKeys(key)
 		if playerAction == "exit" {
 			break
+		}
+		if gameState == "playing" && playerAction != "didnt-take-turn" {
+			for i := 0; i < len(objects); i++ {
+				n := objects[i]
+				if n != player {
+					fmt.Println("The", n.name, "growls!")
+				}
+			}
 		}
 		renderAll()
 	}

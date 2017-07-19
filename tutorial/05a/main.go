@@ -267,7 +267,7 @@ func randIntRange(a, b int) int {
 }
 
 func placeObjects(room *Rect) {
-	/*Function placeObjects places monster withing specified room;
+	/*Function placeObjects places monsters within room borders;
 	it gets random number of monsters to place, then for every monster:
 	- draws x, y coordinates
 	- decides type of monster
