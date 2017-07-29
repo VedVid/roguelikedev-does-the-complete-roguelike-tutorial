@@ -215,6 +215,21 @@ func (obj *Object) takeTurn() {
 	}
 }
 
+func (obj *Object) moveTowards(targetX, targetY int) {
+	dx := float64(targetX - obj.x)
+	dy := float64(targetY - obj.y)
+	distance := float64(math.Sqrt(dx**2 + dy**2))
+	dx = round64ToInt(dx / distance)
+	dy = round64ToInt(dy / distance)
+	obj.move(dx, dy)
+}
+
+func (obj *Object) distanceTo(other *Object) int {
+	dx := other.x - obj.x
+	dy := other.y - obj.y
+	return math.Sqrt(dx**2 + dy**2)
+}
+
 func (room *Rect) center() (cx, cy int) {
 	/*center is method that gets center cell of room*/
 	centerX := (room.x + (room.x + room.h)) / 2
