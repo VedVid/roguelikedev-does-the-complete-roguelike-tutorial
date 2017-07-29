@@ -157,12 +157,18 @@ var (
 )
 
 type Object struct {
-	layer  int
-	x, y   int
-	char   string
-	name   string
-	color  string
-	blocks bool
+	layer   int
+	x, y    int
+	char    string
+	name    string
+	color   string
+	blocks  bool
+	fighter bool
+	maxHP   int
+	curHP   int
+	defense int
+	power   int
+	ai      string
 }
 
 type Tile struct {
@@ -198,6 +204,12 @@ func (obj *Object) clear() {
 	/*clear is method that clears area starting from coords on specific layer*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
+}
+
+func (obj *Object) takeTurn() {
+	if obj.ai != "none" {
+		fmt.Println("The", obj.name, "growls!")
+	}
 }
 
 func (room *Rect) center() (cx, cy int) {
@@ -324,9 +336,11 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "orc", "dark green", true}
+				monster = &Object{0, x, y, "o", "orc", "dark green", true, true,
+					10, 10, 0, 3, "basic"}
 			} else {
-				monster = &Object{0, x, y, "T", "troll", "darker green", true}
+				monster = &Object{0, x, y, "T", "troll", "darker green", true,
+					true, 16, 16, 1, 4, "basic"}
 			}
 			objects = append(objects, monster)
 		}
@@ -557,7 +571,7 @@ func loopOver() {
 			for i := 0; i < len(objects); i++ {
 				n := objects[i]
 				if n != player {
-					fmt.Println("The", n.name, "growls!")
+					n.takeTurn()
 				}
 			}
 		}
@@ -588,7 +602,7 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "player", "white", true}
+	player = &Object{1, 0, 0, "@", "player", "white", true, true, 30, 30, 2, 5, "none"}
 	objects = append(objects, player)
 	makeMap()
 	gameState = "playing"
