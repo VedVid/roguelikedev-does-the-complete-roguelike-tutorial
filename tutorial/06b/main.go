@@ -227,21 +227,19 @@ func (obj *Object) move(dx, dy int) {
 func (obj *Object) moveTowards(targetX, targetY int) {
 	dx := targetX - obj.x
 	dy := targetY - obj.y
-	p := 2
-	power := math.Pow(float64(dx), float64(p)) + math.Pow(float64(dy), float64(p))
-	distance := math.Sqrt(power)
-	dx = round64ToInt(float64(dx) / distance)
-	dy = round64ToInt(float64(dy) / distance)
+	power := powerInt(dx, 2) + powerInt(dy, 2)
+	distance := sqrtInt(power)
+	dx = preciseDiv(dx, distance)
+	dy = preciseDiv(dy, distance)
 	obj.move(dx, dy)
 }
 
 func (obj *Object) distanceTo(other *Object) int {
 	dx := other.x - obj.x
 	dy := other.y - obj.y
-	p := 2
-	power := math.Pow(float64(dx), float64(p)) + math.Pow(float64(dy), float64(p))
-	sqrt := math.Sqrt(power)
-	return round64ToInt(sqrt)
+	power := powerInt(dx, 2) + powerInt(dy, 2)
+	sqrt := sqrtInt(power)
+	return sqrt
 }
 
 func (room *Rect) center() (cx, cy int) {
@@ -306,6 +304,24 @@ func round64ToInt(value float64) int {
 	then returns new value converted to integer*/
 	a := round64(value, 0.5, 0)
 	return int(a)
+}
+
+func preciseDiv(val1, val2 int) int {
+	v1, v2 := float64(val1), float64(val2)
+	result := v1 / v2
+	return round64ToInt(result)
+}
+
+func powerInt(value, power int) int {
+	v, p := float64(value), float64(power)
+	result := math.Pow(v, p)
+	return round64ToInt(result)
+}
+
+func sqrtInt(value int) int {
+	v := float64(value)
+	result := math.Sqrt(v)
+	return round64ToInt(result)
 }
 
 func randIntRange(a, b int) int {
