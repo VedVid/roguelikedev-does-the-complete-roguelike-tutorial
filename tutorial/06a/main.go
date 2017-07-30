@@ -211,37 +211,8 @@ func (obj *Object) clear() {
 
 func (obj *Object) takeTurn() {
 	if obj.ai != AINone {
-		if isInFOV(player.x, player.y, obj.x, obj.y) {
-			if obj.distanceTo(player) >= 2 {
-				obj.moveTowards(player.x, player.y)
-			} else {
-				if player.curHP > 0 {
-					fmt.Println("The attack of the", obj.name,
-						"bounces off your shiny metal armor!")
-				}
-			}
-		}
+		fmt.Println("The", obj.name, "growls!")
 	}
-}
-
-func (obj *Object) moveTowards(targetX, targetY int) {
-	dx := targetX - obj.x
-	dy := targetY - obj.y
-	p := 2
-	power := math.Pow(float64(dx), float64(p)) + math.Pow(float64(dy), float64(p))
-	distance := math.Sqrt(power)
-	dx = round64ToInt(float64(dx) / distance)
-	dy = round64ToInt(float64(dy) / distance)
-	obj.move(dx, dy)
-}
-
-func (obj *Object) distanceTo(other *Object) int {
-	dx := other.x - obj.x
-	dy := other.y - obj.y
-	p := 2
-	power := math.Pow(float64(dx), float64(p)) + math.Pow(float64(dy), float64(p))
-	sqrt := math.Sqrt(power)
-	return round64ToInt(sqrt)
 }
 
 func (room *Rect) center() (cx, cy int) {
