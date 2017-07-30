@@ -185,16 +185,6 @@ type Rect struct {
 	w, h int
 }
 
-func (obj *Object) move(dx, dy int) {
-	/* move is method for handling objects movement;
-	   it receives pointer to object, then checks cell for blocked field,
-	   and adds arguments to object values if tile is passable*/
-	if isBlocked(obj.x+dx, obj.y+dy) == false {
-		obj.x += dx
-		obj.y += dy
-	}
-}
-
 func (obj *Object) draw() {
 	/*draw is method that prints Objects
 	on specified positions on specified layer*/
@@ -212,6 +202,16 @@ func (obj *Object) clear() {
 func (obj *Object) takeTurn() {
 	if obj.ai != AINone {
 		fmt.Println("The", obj.name, "growls!")
+	}
+}
+
+func (obj *Object) move(dx, dy int) {
+	/* move is method for handling objects movement;
+	   it receives pointer to object, then checks cell for blocked field,
+	   and adds arguments to object values if tile is passable*/
+	if isBlocked(obj.x+dx, obj.y+dy) == false {
+		obj.x += dx
+		obj.y += dy
 	}
 }
 
