@@ -26,6 +26,7 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
+	"unicode/utf8"
 
 	blt "bearlibterminal"
 )
@@ -206,8 +207,7 @@ func (obj *Object) takeTurn() {
 				obj.moveTowards(player.x, player.y)
 			} else {
 				if player.curHP > 0 {
-					fmt.Println("The attack of the", obj.name,
-						"bounces off your shiny metal armor!")
+					obj.attack(player)
 				}
 			}
 		}
@@ -216,8 +216,8 @@ func (obj *Object) takeTurn() {
 
 func (obj *Object) move(dx, dy int) {
 	/* move is method for handling objects movement;
-	   it receives pointer to object, then checks cell for blocked field,
-	   and adds arguments to object values if tile is passable*/
+	   it receives pointer to object, then, adds arguments to
+	   object values.*/
 	if isBlocked(obj.x+dx, obj.y+dy) == false {
 		obj.x += dx
 		obj.y += dy
@@ -240,6 +240,23 @@ func (obj *Object) distanceTo(other *Object) int {
 	power := powerInt(dx, 2) + powerInt(dy, 2)
 	sqrt := sqrtInt(power)
 	return sqrt
+}
+
+func (obj *Object) takeDamage(damage int) {
+	if damage > 0 {
+		obj.curHP -= damage
+	}
+}
+
+func (obj *Object) attack(target *Object) {
+	damage := obj.power - target.defense
+	strdmg := strconv.Itoa(damage)
+	if damage > 0 {
+		fmt.Println(obj.name, "attacks", target.name, "for", strdmg, "hit points.")
+		target.takeDamage(damage)
+	} else {
+		fmt.Println(obj.name, "attacks", target.name, "but it has no effect!")
+	}
 }
 
 func (room *Rect) center() (cx, cy int) {
@@ -367,7 +384,7 @@ func playerMoveOrAttack(dx, dy int) {
 	if target == nil {
 		player.move(dx, dy)
 	} else {
-		fmt.Println("The", target.name, "laughts at your puny efforts to attack him!")
+		player.attack(target)
 	}
 }
 
@@ -575,6 +592,12 @@ func renderAll() {
 			n.draw()
 		}
 	}
+	curHP := strconv.Itoa(player.curHP)
+	maxHP := strconv.Itoa(player.maxHP)
+	hp := "HP: " + curHP + "/" + maxHP
+	//why it doesn't clears area; but works if placed after printing?
+	blt.ClearArea(1, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+	blt.Print(1, windowSizeY-2, hp)
 }
 
 func handleKeys(key int) string {
