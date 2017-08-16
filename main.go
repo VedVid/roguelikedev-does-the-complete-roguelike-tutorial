@@ -26,7 +26,6 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
-	"unicode/utf8"
 
 	blt "bearlibterminal"
 )
@@ -598,7 +597,7 @@ func printUI() {
 	curHP := strconv.Itoa(player.curHP)
 	maxHP := strconv.Itoa(player.maxHP)
 	hp := "HP: " + curHP + "/" + maxHP
-	blt.ClearArea(0, windowSizeY-2, utf8.RuneCountInString(hp)+2, 1)
+	blt.ClearArea(0, windowSizeY-2, windowSizeX, 1)
 	blt.Print(1, windowSizeY-2, hp)
 }
 
