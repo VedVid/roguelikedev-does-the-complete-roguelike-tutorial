@@ -657,6 +657,7 @@ func main() {
 	/*Function main initializes main loop;
 	when loop breaks, closes blt console.*/
 	renderAll()
+	printUI()
 	loopOver()
 	blt.Close()
 }
