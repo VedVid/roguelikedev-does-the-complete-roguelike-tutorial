@@ -592,12 +592,6 @@ func renderAll() {
 			n.draw()
 		}
 	}
-	curHP := strconv.Itoa(player.curHP)
-	maxHP := strconv.Itoa(player.maxHP)
-	hp := "HP: " + curHP + "/" + maxHP
-	//why it doesn't clears area; but works if placed after printing?
-	blt.ClearArea(1, windowSizeY-2, utf8.RuneCountInString(hp), 1)
-	blt.Print(1, windowSizeY-2, hp)
 }
 
 func handleKeys(key int) string {
@@ -634,6 +628,17 @@ func loopOver() {
 				n.clear()
 			}
 		}
+		curHP := strconv.Itoa(player.curHP)
+		maxHP := strconv.Itoa(player.maxHP)
+		hp := "HP: " + curHP + "/" + maxHP
+		//why it doesn't clears area; but works if placed after printing?
+		blt.ClearArea(0, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.ClearArea(1, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.ClearArea(2, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.ClearArea(3, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.ClearArea(4, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.ClearArea(5, windowSizeY-2, utf8.RuneCountInString(hp), 1)
+		blt.Print(1, windowSizeY-2, hp)
 		playerAction = handleKeys(key)
 		if playerAction == "exit" {
 			break
