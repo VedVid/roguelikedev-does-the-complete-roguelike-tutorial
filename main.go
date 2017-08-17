@@ -561,6 +561,7 @@ func renderAll() {
 	/*Function renderAll handles display;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
+	blt.Clear()
 	castRays()
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
@@ -591,13 +592,13 @@ func renderAll() {
 			n.draw()
 		}
 	}
+	printUI()
 }
 
 func printUI() {
 	curHP := strconv.Itoa(player.curHP)
 	maxHP := strconv.Itoa(player.maxHP)
 	hp := "HP: " + curHP + "/" + maxHP
-	blt.ClearArea(0, windowSizeY-2, windowSizeX, 1)
 	blt.Print(1, windowSizeY-2, hp)
 }
 
@@ -627,6 +628,7 @@ func loopOver() {
 	/*Function loopOver is main loop of the game.*/
 	playerAction := "none"
 	for {
+		renderAll()
 		blt.Refresh()
 		key := blt.Read()
 		if gameState == "playing" && playerAction != "didnt-take-turn" {
@@ -635,7 +637,6 @@ func loopOver() {
 				n.clear()
 			}
 		}
-		printUI()
 		playerAction = handleKeys(key)
 		if playerAction == "exit" {
 			break
@@ -648,14 +649,12 @@ func loopOver() {
 				}
 			}
 		}
-		renderAll()
 	}
 }
 
 func main() {
 	/*Function main initializes main loop;
 	when loop breaks, closes blt console.*/
-	renderAll()
 	loopOver()
 	blt.Close()
 }
