@@ -2,5 +2,6 @@
 *.exe
 *.lib
 *.dll
+/test/
 /TUTORIAL.md
 /WRITEUP.md
