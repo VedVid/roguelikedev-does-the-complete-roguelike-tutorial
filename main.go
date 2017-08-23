@@ -224,6 +224,9 @@ func (obj *Object) move(dx, dy int) {
 }
 
 func (obj *Object) moveTowards(targetX, targetY int) {
+	/* moveTowards is method that AI uses for movement towards specific target;
+	   it receives pointer to the object, computes vector to that object,
+	   rounds to int x, y, then applies method move to specific direction*/
 	dx := targetX - obj.x
 	dy := targetY - obj.y
 	power := powerInt(dx, 2) + powerInt(dy, 2)
@@ -234,6 +237,8 @@ func (obj *Object) moveTowards(targetX, targetY int) {
 }
 
 func (obj *Object) distanceTo(other *Object) int {
+	/* distanceTo is auxiliary method that returns distance from
+	   source to target*/
 	dx := other.x - obj.x
 	dy := other.y - obj.y
 	power := powerInt(dx, 2) + powerInt(dy, 2)
@@ -242,12 +247,19 @@ func (obj *Object) distanceTo(other *Object) int {
 }
 
 func (obj *Object) takeDamage(damage int) {
+	/* takeDamage is method for camputing hg loss upon attack;
+	   it receives pointer to the object and amount of damage taken;
+	   current HP of object decreases of specified number*/
 	if damage > 0 {
 		obj.curHP -= damage
 	}
 }
 
 func (obj *Object) attack(target *Object) {
+	/* attack is function that handles attacking when in combat;
+	   it receives pointer to the source object, and
+	   gets passed taret object; damage is converted to string for use in
+	   combat log; if damage is bigger than 0, target takes damage*/
 	damage := obj.power - target.defense
 	strdmg := strconv.Itoa(damage)
 	if damage > 0 {
@@ -323,18 +335,23 @@ func round64ToInt(value float64) int {
 }
 
 func preciseDiv(val1, val2 int) int {
+	/* Function preciseDiv converts two ints to floats for detailed division,
+	   then uses round64ToInt for rounding result to integer*/
 	v1, v2 := float64(val1), float64(val2)
 	result := v1 / v2
 	return round64ToInt(result)
 }
 
 func powerInt(value, power int) int {
+	/* Function powerInt gets two integer arguments: value and its power;
+	   returns result cumputed by math.Pow function*/
 	v, p := float64(value), float64(power)
 	result := math.Pow(v, p)
 	return round64ToInt(result)
 }
 
 func sqrtInt(value int) int {
+	/* Function sqrtInt returns square root of value; uses math.Sqrt*/
 	v := float64(value)
 	result := math.Sqrt(v)
 	return round64ToInt(result)
@@ -559,6 +576,7 @@ func isInFOV(sx, sy, tx, ty int) bool {
 
 func renderAll() {
 	/*Function renderAll handles display;
+	clears whole console;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
 	blt.Clear()
@@ -596,6 +614,8 @@ func renderAll() {
 }
 
 func printUI() {
+	/* Function printUI prints player info on the bottom of screen;
+	   it's used by renderAll function*/
 	curHP := strconv.Itoa(player.curHP)
 	maxHP := strconv.Itoa(player.maxHP)
 	hp := "HP: " + curHP + "/" + maxHP
