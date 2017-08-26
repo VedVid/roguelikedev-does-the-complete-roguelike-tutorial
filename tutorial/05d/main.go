@@ -45,6 +45,11 @@ const (
 	fovRays      = 360
 	fovLength    = 5
 	fovStep      = 3
+
+	playing       = "playing"
+	exit          = "exit"
+	takeTurn      = "take-turn"
+	didntTakeTurn = "didnt-take-turn"
 )
 
 var (
@@ -519,9 +524,9 @@ func handleKeys(key int) string {
 	/*Function handleKeys allows to control player character
 	by reading input from main loop*/
 	if key == blt.TK_CLOSE || key == blt.TK_ESCAPE {
-		return "exit"
+		return exit
 	}
-	if gameState == "playing" {
+	if gameState == playing {
 		if key == blt.TK_UP {
 			playerMoveOrAttack(0, -1)
 		} else if key == blt.TK_DOWN {
@@ -531,10 +536,10 @@ func handleKeys(key int) string {
 		} else if key == blt.TK_RIGHT {
 			playerMoveOrAttack(1, 0)
 		} else {
-			return "didnt-take-turn"
+			return didntTakeTurn
 		}
 	}
-	return "take-turn"
+	return takeTurn
 }
 
 func loopOver() {
@@ -543,17 +548,17 @@ func loopOver() {
 	for {
 		blt.Refresh()
 		key := blt.Read()
-		if gameState == "playing" && playerAction != "didnt-take-turn" {
+		if gameState == playing && playerAction != didntTakeTurn {
 			for i := 0; i < len(objects); i++ {
 				n := objects[i]
 				n.clear()
 			}
 		}
 		playerAction = handleKeys(key)
-		if playerAction == "exit" {
+		if playerAction == exit {
 			break
 		}
-		if gameState == "playing" && playerAction != "didnt-take-turn" {
+		if gameState == playing && playerAction != didntTakeTurn {
 			for i := 0; i < len(objects); i++ {
 				n := objects[i]
 				if n != player {
@@ -591,5 +596,5 @@ func init() {
 	player = &Object{1, 0, 0, "@", "player", "white", true}
 	objects = append(objects, player)
 	makeMap()
-	gameState = "playing"
+	gameState = playing
 }
