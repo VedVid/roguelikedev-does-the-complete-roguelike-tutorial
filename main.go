@@ -168,19 +168,23 @@ var (
 )
 
 type Object struct {
-	layer   int
-	x, y    int
-	char    string
-	name    string
-	color   string
-	blocks  bool
-	fighter bool
-	maxHP   int
-	curHP   int
-	defense int
-	power   int
-	ai      string
-	death   string
+	layer  int
+	x, y   int
+	char   string
+	name   string
+	color  string
+	blocks bool
+	*Fighter
+}
+
+type Fighter struct {
+	isFighter bool
+	maxHP     int
+	curHP     int
+	defense   int
+	power     int
+	ai        string
+	death     string
 }
 
 type Tile struct {
@@ -282,7 +286,7 @@ func (obj *Object) deathFunction(death string) {
 		obj.char = "%"
 		obj.color = "dark red"
 		obj.blocks = false
-		obj.fighter = false
+		obj.isFighter = false
 		obj.ai = AINone
 		obj.name = "remains of " + obj.name
 	}
@@ -425,7 +429,7 @@ func playerMoveOrAttack(dx, dy int) {
 	var target *Object
 	for i := 0; i < len(objects); i++ {
 		obj := objects[i]
-		if obj.fighter == true && obj.x == x && obj.y == y {
+		if obj.isFighter == true && obj.x == x && obj.y == y {
 			target = obj
 			break
 		}
@@ -450,11 +454,11 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "orc", "dark green", true, true,
-					10, 10, 0, 3, AIBasic, deathMonster}
+				monster = &Object{0, x, y, "o", "orc", "dark green", true,
+					&Fighter{true, 10, 10, 0, 3, AIBasic, deathMonster}}
 			} else {
 				monster = &Object{0, x, y, "T", "troll", "darker green", true,
-					true, 16, 16, 1, 4, AIBasic, deathMonster}
+					&Fighter{true, 16, 16, 1, 4, AIBasic, deathMonster}}
 			}
 			objects = append(objects, monster)
 		}
@@ -727,8 +731,8 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "player", "white", true, true, 30, 30, 2, 5,
-		AINone, deathPlayer}
+	player = &Object{1, 0, 0, "@", "player", "white", true,
+		&Fighter{true, 30, 30, 2, 5, AINone, deathPlayer}}
 	objects = append(objects, player)
 	makeMap()
 	gameState = playing
