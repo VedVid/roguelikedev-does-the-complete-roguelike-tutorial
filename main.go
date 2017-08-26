@@ -46,8 +46,10 @@ const (
 	fovLength    = 5
 	fovStep      = 3
 
-	AINone  = "none"
-	AIBasic = "basic"
+	AINone       = "none"
+	AIBasic      = "basic"
+	deathPlayer  = "player"
+	deathMonster = "monster"
 )
 
 var (
@@ -172,6 +174,7 @@ type Object struct {
 	defense int
 	power   int
 	ai      string
+	death   string
 }
 
 type Tile struct {
@@ -252,6 +255,30 @@ func (obj *Object) takeDamage(damage int) {
 	   current HP of object decreases of specified number*/
 	if damage > 0 {
 		obj.curHP -= damage
+	}
+	if obj.curHP <= 0 {
+		obj.deathFunction(obj.death)
+	}
+}
+
+func (obj *Object) deathFunction(death string) {
+	/* deathFunction is method for handling entities deaths;
+	   at first it checks what is death value of object; if it's player,
+	   game ends, due gameState changed to "dead";
+	   if it's monster, its blocks, fighter and ai values changing to negative*/
+	if death == deathPlayer {
+		fmt.Println("You died!")
+		gameState = "dead"
+		player.char = "%"
+		player.color = "dark red"
+	} else if death == deathMonster {
+		fmt.Println(obj.name, "is dead!")
+		obj.char = "%"
+		obj.color = "dark red"
+		obj.blocks = false
+		obj.fighter = false
+		obj.ai = AINone
+		obj.name = "remains of " + obj.name
 	}
 }
 
