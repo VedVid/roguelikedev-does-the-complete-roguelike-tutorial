@@ -50,37 +50,37 @@ type Object struct {
 }
 
 type Tile struct {
-	blocked      bool
-	blocks_sight bool
-}
-
-func (obj *Object) move(dx, dy int) {
-	/* move is method for handling objects movement;
-	   it receives pointer to object, then checks cell for blocked field,
-	   and adds arguments to object values if tile is passable*/
-	if board[obj.x+dx][obj.y+dy].blocked == false {
-		obj.x += dx
-		obj.y += dy
-	}
+	blocked     bool
+	blocksSight bool
 }
 
 func (obj *Object) draw() {
-	/*draw is method that prints Objects
-	on specified positions on specified layer*/
+	/* draw is method that prints Objects
+	   on specified positions on specified layer.*/
 	blt.Layer(obj.layer)
 	ch := "[color=" + obj.color + "]" + obj.char
 	blt.Print(obj.x, obj.y, ch)
 }
 
 func (obj *Object) clear() {
-	/*clear is method that clears area starting from coords on specific layer*/
+	/* clear is method that clears area starting from coords on specific layer.*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
+func (obj *Object) move(dx, dy int) {
+	/* move is method for handling objects movement.
+	   It receives pointer to object, then adds arguments to
+	   object values.*/
+	if board[obj.x+dx][obj.y+dy].blocked == false {
+		obj.x += dx
+		obj.y += dy
+	}
+}
+
 func makeMap() {
-	/*Function makeMap creates dungeon map by
-	creating empty 2d array then filling it by Tiles*/
+	/* Function makeMap creates dungeon map by
+	   creating empty 2d array then filling it by Tiles*/
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
@@ -98,10 +98,10 @@ func makeMap() {
 }
 
 func renderAll() {
-	/*Function renderAll handles display;
-	clears all layers of blt console and sets current layer to the bottom one;
-	draws floors and walls with regard to board[x][y] *Tile, then
-	use (obj *Object) draw() method with list of game objects*/
+	/* Function renderAll handles display;
+	   clears all layers of blt console and sets current layer to the bottom one;
+	   draws floors and walls with regard to board[x][y] *Tile, then
+	   use (obj *Object) draw() method with list of game objects.*/
 	blt.Clear()
 	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
@@ -136,7 +136,7 @@ func handleKeys(key int) {
 }
 
 func loopOver() {
-	/*Function loopOver is main loop of the game.*/
+	/* Function loopOver is main loop of the game.*/
 	for {
 		renderAll()
 		blt.Refresh()
@@ -154,15 +154,16 @@ func loopOver() {
 }
 
 func main() {
-	/*Function main initializes main loop;
-	when loop breaks, closes blt console.*/
+	/* Function main initializes main loop;
+	   when loop breaks, closes blt console.*/
 	loopOver()
 	blt.Close()
 }
 
 func init() {
-	/*It's app initialization.
-	Starts by setting blt console properties.*/
+	/* Function init is app initialization.
+	   Sets BearLibTerminal console properties, creates player, npc, and
+	   first level of dungeon.*/
 	blt.Open()
 	sizeX, sizeY := strconv.Itoa(windowSizeX), strconv.Itoa(windowSizeY)
 	size := "size=" + sizeX + "x" + sizeY

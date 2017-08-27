@@ -59,32 +59,32 @@ type Rect struct {
 	w, h int
 }
 
-func (obj *Object) move(dx, dy int) {
-	/* move is method for handling objects movement;
-	   it receives pointer to object, then checks cell for blocked field,
-	   and adds arguments to object values if tile is passable*/
-	if board[obj.x+dx][obj.y+dy].blocked == false {
-		obj.x += dx
-		obj.y += dy
-	}
-}
-
 func (obj *Object) draw() {
-	/*draw is method that prints Objects
-	on specified positions on specified layer*/
+	/* draw is method that prints Objects
+	   on specified positions on specified layer.*/
 	blt.Layer(obj.layer)
 	ch := "[color=" + obj.color + "]" + obj.char
 	blt.Print(obj.x, obj.y, ch)
 }
 
 func (obj *Object) clear() {
-	/*clear is method that clears area starting from coords on specific layer*/
+	/* clear is method that clears area starting from coords on specific layer.*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
+func (obj *Object) move(dx, dy int) {
+	/* move is method for handling objects movement.
+	   It receives pointer to object, then adds arguments to
+	   object values.*/
+	if board[obj.x+dx][obj.y+dy].blocked == false {
+		obj.x += dx
+		obj.y += dy
+	}
+}
+
 func min(a, b int) int {
-	/*Function min returns smaller of two integers*/
+	/* Function min returns smaller of two integers.*/
 	if a < b {
 		return a
 	}
@@ -92,18 +92,18 @@ func min(a, b int) int {
 }
 
 func max(a, b int) int {
-	/*Function max returns bigger of two integers*/
+	/* Function max returns bigger of two integers.*/
 	if a > b {
 		return a
 	}
 	return b
 }
 
-func createRoom(room Rect) {
-	/*Function createRoom uses Rect struct for
-	marking specific area as passable;
-	takes initial [x][y]cell and width, height of room,
-	then iterates through map*/
+func createRoom(room *Rect) {
+	/* Function createRoom uses Rect struct for
+	   marking specific area as passable;
+	   takes initial [x][y]cell and width, height of room,
+	   then iterates through map.*/
 	for x := room.x + 1; x < room.x+room.w; x++ {
 		for y := room.y + 1; y < room.y+room.h; y++ {
 			board[x][y].blocked = false
@@ -122,8 +122,8 @@ func horizontalTunnel(x1, x2, y int) {
 }
 
 func verticalTunnel(y1, y2, x int) {
-	/*Function verticalTunnel carves passable area
-	from y1 to y2 on x column*/
+	/* Function verticalTunnel carves passable area
+	   from y1 to y2 on x column.*/
 	for y := min(y1, y2); y < max(y1, y2)+1; y++ {
 		board[x][y].blocked = false
 		board[x][y].blocksSight = false
@@ -131,8 +131,9 @@ func verticalTunnel(y1, y2, x int) {
 }
 
 func makeMap() {
-	/*Function makeMap creates dungeon map by
-	creating empty 2d array then filling it by Tiles*/
+	/* Function makeMap creates dungeon map by
+	   creating empty 2d array then filling it by Tiles.
+	   Rooms, corridors and objects are placed manually.*/
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
@@ -153,10 +154,10 @@ func makeMap() {
 }
 
 func renderAll() {
-	/*Function renderAll handles display;
-	clears all layers of blt console and sets current layer to the bottom one;
-	draws floors and walls with regard to board[x][y] *Tile, then
-	use (obj *Object) draw() method with list of game objects*/
+	/* Function renderAll handles display;
+	   clears all layers of blt console and sets current layer to the bottom one;
+	   draws floors and walls with regard to board[x][y] *Tile, then
+	   use (obj *Object) draw() method with list of game objects.*/
 	blt.Clear()
 	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
@@ -191,7 +192,7 @@ func handleKeys(key int) {
 }
 
 func loopOver() {
-	/*Function loopOver is main loop of the game.*/
+	/* Function loopOver is main loop of the game.*/
 	for {
 		renderAll()
 		blt.Refresh()
@@ -209,15 +210,16 @@ func loopOver() {
 }
 
 func main() {
-	/*Function main initializes main loop;
-	when loop breaks, closes blt console.*/
+	/* Function main initializes main loop;
+	   when loop breaks, closes blt console.*/
 	loopOver()
 	blt.Close()
 }
 
 func init() {
-	/*It's app initialization.
-	Starts by setting blt console properties.*/
+	/* Function init is app initialization.
+	   Sets BearLibTerminal console properties, creates player, npc, and
+	   first level of dungeon.*/
 	blt.Open()
 	sizeX, sizeY := strconv.Itoa(windowSizeX), strconv.Itoa(windowSizeY)
 	size := "size=" + sizeX + "x" + sizeY

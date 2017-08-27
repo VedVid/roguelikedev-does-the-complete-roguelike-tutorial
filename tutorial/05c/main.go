@@ -164,6 +164,7 @@ type Object struct {
 	layer  int
 	x, y   int
 	char   string
+	name   string
 	color  string
 	blocks bool
 }
@@ -179,41 +180,41 @@ type Rect struct {
 	w, h int
 }
 
-func (obj *Object) move(dx, dy int) {
-	/* move is method for handling objects movement;
-	   it receives pointer to object, then checks cell for blocked field,
-	   and adds arguments to object values if tile is passable*/
-	if isBlocked(obj.x+dx, obj.y+dy) == false {
-		obj.x += dx
-		obj.y += dy
-	}
-}
-
 func (obj *Object) draw() {
-	/*draw is method that prints Objects
-	on specified positions on specified layer*/
+	/* draw is method that prints Objects
+	   on specified positions on specified layer.*/
 	blt.Layer(obj.layer)
 	ch := "[color=" + obj.color + "]" + obj.char
 	blt.Print(obj.x, obj.y, ch)
 }
 
 func (obj *Object) clear() {
-	/*clear is method that clears area starting from coords on specific layer*/
+	/* clear is method that clears area starting from coords on specific layer.*/
 	blt.Layer(obj.layer)
 	blt.ClearArea(obj.x, obj.y, 1, 1)
 }
 
+func (obj *Object) move(dx, dy int) {
+	/* move is method for handling objects movement.
+	   It receives pointer to object, then adds arguments to
+	   object values.*/
+	if isBlocked(obj.x+dx, obj.y+dy) == false {
+		obj.x += dx
+		obj.y += dy
+	}
+}
+
 func (room *Rect) center() (cx, cy int) {
-	/*center is method that gets center cell of room*/
+	/* center is method that gets center cell of room.*/
 	centerX := (room.x + (room.x + room.h)) / 2
 	centerY := (room.y + (room.y + room.w)) / 2
 	return centerX, centerY
 }
 
 func (room *Rect) intersect(other *Rect) bool {
-	/*intersect is method that checks by coordinates comparison
-	if rooms (room and other) are not overlapping;
-	returns true or false*/
+	/* intersect is method that checks by coordinates comparison
+	   if rooms (room and other) are not overlapping;
+	   returns true or false.*/
 	cond1 := (room.x <= other.x+other.w)
 	cond2 := (room.x+room.w >= other.x)
 	cond3 := (room.y <= other.y+other.h)
@@ -222,7 +223,7 @@ func (room *Rect) intersect(other *Rect) bool {
 }
 
 func min(a, b int) int {
-	/*Function min returns smaller of two integers*/
+	/* Function min returns smaller of two integers.*/
 	if a < b {
 		return a
 	}
@@ -230,7 +231,7 @@ func min(a, b int) int {
 }
 
 func max(a, b int) int {
-	/*Function max returns bigger of two integers*/
+	/* Function max returns bigger of two integers.*/
 	if a > b {
 		return a
 	}
@@ -238,8 +239,8 @@ func max(a, b int) int {
 }
 
 func round64(value, rounding float64, places int) float64 {
-	/*Function round64 rounds float64 values (value) to specified
-	number of digits (places) using given point-of-rounding-up (rounding)*/
+	/* Function round64 rounds float64 values (value) to specified
+	   number of digits (places) using given point-of-rounding-up (rounding).*/
 	pow := math.Pow(10, float64(places))
 	digit := pow * value
 	_, div := math.Modf(digit)
@@ -261,25 +262,25 @@ func round64(value, rounding float64, places int) float64 {
 }
 
 func round64ToInt(value float64) int {
-	/*Function round64ToInt gets float64 value, uses round64 function,
-	then returns new value converted to integer*/
+	/* Function round64ToInt gets float64 value, uses round64 function,
+	   then returns new value converted to integer.*/
 	a := round64(value, 0.5, 0)
 	return int(a)
 }
 
 func randIntRange(a, b int) int {
-	/*func randIntRange returns random integer withing specified range;
-	uses rand.Intn(n) from standard library that returns [0, n)*/
+	/* Function randIntRange returns random integer withing specified range;
+	   uses rand.Intn(n) from standard library that returns [0, n).*/
 	return rand.Intn(b-a) + a
 }
 
 func isBlocked(x, y int) bool {
-	/*Function isBlocked checks if map cell is blocked by wall or object;
-	returns true if cell's blocked field is set to true;
-	iterates through objects slice and
-	returns true if object's blocks field is set to true and its coordinates
-	matches function arguments;
-	otherwise, returns false*/
+	/* Function isBlocked checks if map cell is blocked by wall or object.
+	   Returns true if cell's blocked field is set to true;
+	   iterates through objects slice and
+	   returns true if object's blocks field is set to true and its coordinates
+	   matches function arguments;
+	   otherwise, returns false.*/
 	if board[x][y].blocked == true {
 		return true
 	}
@@ -293,11 +294,11 @@ func isBlocked(x, y int) bool {
 }
 
 func placeObjects(room *Rect) {
-	/*Function placeObjects places monsters within room borders;
-	it gets random number of monsters to place, then for every monster:
-	- draws x, y coordinates
-	- decides type of monster
-	- adds monster to objects slice*/
+	/* Function placeObjects places monsters within room borders;
+	   it gets random number of monsters to place, then for every monster:
+	   - draws x, y coordinates;
+	   - decides type of monster;
+	   - adds monster to objects slice.*/
 	numMonsters := rand.Intn(maxMonsters + 1)
 	var monster *Object
 	for i := 0; i < numMonsters; i++ {
@@ -305,9 +306,9 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{1, x, y, "o", "dark green", true}
+				monster = &Object{1, x, y, "o", "orc", "dark green", true}
 			} else {
-				monster = &Object{1, x, y, "T", "darker green", true}
+				monster = &Object{1, x, y, "T", "troll", "darker green", true}
 			}
 			objects = append(objects, monster)
 		}
@@ -315,10 +316,10 @@ func placeObjects(room *Rect) {
 }
 
 func createRoom(room *Rect) {
-	/*Function createRoom uses Rect struct for
-	marking specific area as passable;
-	takes initial [x][y]cell and width, height of room,
-	then iterates through map*/
+	/* Function createRoom uses Rect struct for
+	   marking specific area as passable;
+	   takes initial [x][y]cell and width, height of room,
+	   then iterates through map.*/
 	for x := room.x + 1; x < room.x+room.w; x++ {
 		for y := room.y + 1; y < room.y+room.h; y++ {
 			board[x][y].blocked = false
@@ -337,8 +338,8 @@ func horizontalTunnel(x1, x2, y int) {
 }
 
 func verticalTunnel(y1, y2, x int) {
-	/*Function verticalTunnel carves passable area
-	from y1 to y2 on x column*/
+	/* Function verticalTunnel carves passable area
+	   from y1 to y2 on x column.*/
 	for y := min(y1, y2); y < max(y1, y2)+1; y++ {
 		board[x][y].blocked = false
 		board[x][y].blocksSight = false
@@ -346,10 +347,10 @@ func verticalTunnel(y1, y2, x int) {
 }
 
 func makeMap() {
-	/*Function makeMap creates dungeon map by:
-	- creating empty 2d array then filling it by Tiles;
-	- creating new room that doesn't overlap other rooms;
-	- connects rooms using tunnels*/
+	/* Function makeMap creates dungeon map by:
+	   - creating empty 2d array then filling it by Tiles;
+	   - creating new room that doesn't overlap other rooms;
+	   - connects rooms using tunnels.*/
 	var rooms []*Rect
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
@@ -400,11 +401,11 @@ func makeMap() {
 }
 
 func castRays() {
-	/*func castRays is simple raycasting function for turning tiles to explored;
-	it cast (fovRays / fovStep) rays (bigger fovStep means faster but
-	more error-prone raycasting) from player to coordinates in fovLength range;
-	source of algorithm:
-	http://www.roguebasin.com/index.php?title=Raycasting_in_python [20170712]*/
+	/* Function castRays is simple raycasting function for turning tiles to explored.
+	   It casts (fovRays / fovStep) rays (bigger fovStep means faster but
+	   more error-prone raycasting) from player to coordinates in fovLength range.
+	   Source of algorithm:
+	   http://www.roguebasin.com/index.php?title=Raycasting_in_python [20170712]*/
 	for i := 0; i < fovRays; i += fovStep {
 		rayX := sinBase[i]
 		rayY := cosBase[i]
@@ -427,12 +428,12 @@ func castRays() {
 }
 
 func isInFOV(sx, sy, tx, ty int) bool {
-	/*checks if target (tx, ty) is in fov of source (sx, sy);
-	returns true if tx, ty == sx, sy; otherwise, it casts (fovRays / fovStep)
-	rays (bigger fovStep means faster but more error-prone algorithm)
-	from source to tiles in fovLength range; stops if cell is blocked;
-	source of algorithm:
-	http://www.roguebasin.com/index.php?title=Raycasting_in_python [20170712]*/
+	/* Function isInFOV checks if target (tx, ty) is in fov of source (sx, sy).
+	   Returns true if tx, ty == sx, sy; otherwise, it casts (fovRays / fovStep)
+	   rays (bigger fovStep means faster but more error-prone algorithm)
+	   from source to tiles in fovLength range; stops if cell is blocked.
+	   Source of algorithm:
+	   http://www.roguebasin.com/index.php?title=Raycasting_in_python [20170712].*/
 	if sx == tx && sy == ty {
 		return true
 	}
@@ -460,11 +461,11 @@ func isInFOV(sx, sy, tx, ty int) bool {
 }
 
 func renderAll() {
-	/*Function renderAll handles display;
-	clears all layers of blt console, initializes raycasting,
-	and sets current layer to the bottom one;
-	draws floors and walls with regard to board[x][y] *Tile, then
-	use (obj *Object) draw() method with list of game objects*/
+	/* Function renderAll handles display.
+	   Clears all layers of blt console, initializes raycasting,
+	   and sets current layer to the bottom one;
+	   draws floors and walls with regard to board[x][y] *Tile, then
+	   use (obj *Object) draw() method with list of game objects.*/
 	blt.Clear()
 	castRays()
 	blt.Layer(0)
@@ -500,8 +501,9 @@ func renderAll() {
 }
 
 func handleKeys(key int) string {
-	/*Function handleKeys allows to control player character
-	by reading input from main loop*/
+	/* Function handleKeys allows to control player character
+	   by reading input from main loop. If testing keys fail,
+	   returns didntTakeTurn; else moves player.*/
 	if key == blt.TK_CLOSE || key == blt.TK_ESCAPE {
 		return exit
 	}
@@ -522,13 +524,13 @@ func handleKeys(key int) string {
 }
 
 func loopOver() {
-	/*Function loopOver is main loop of the game.*/
+	/* Function loopOver is main loop of the game.*/
 	playerAction := "none"
 	for {
 		renderAll()
 		blt.Refresh()
 		key := blt.Read()
-		if gameState == playing || playerAction != didntTakeTurn {
+		if gameState == playing && playerAction != didntTakeTurn {
 			for i := 0; i < len(objects); i++ {
 				n := objects[i]
 				n.clear()
@@ -542,15 +544,16 @@ func loopOver() {
 }
 
 func main() {
-	/*Function main initializes main loop;
-	when loop breaks, closes blt console.*/
+	/* Function main initializes main loop;
+	   when loop breaks, closes blt console.*/
 	loopOver()
 	blt.Close()
 }
 
 func init() {
-	/*It's app initialization.
-	Starts by setting blt console properties.*/
+	/* Function init is app initialization.
+	   Sets seed, BearLibTerminal console properties, creates player and
+	   first level of dungeon; sets gameState to 'playing'.*/
 	rand.Seed(time.Now().Unix())
 	blt.Open()
 	sizeX, sizeY := strconv.Itoa(windowSizeX), strconv.Itoa(windowSizeY)
@@ -563,7 +566,7 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{2, 0, 0, "@", "white", true}
+	player = &Object{2, 0, 0, "@", "player", "white", true}
 	objects = append(objects, player)
 	makeMap()
 	gameState = playing
