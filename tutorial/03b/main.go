@@ -216,6 +216,7 @@ func renderAll() {
 	/*Function renderAll handles display;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
+	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
 			if board[x][y].blocked == true {

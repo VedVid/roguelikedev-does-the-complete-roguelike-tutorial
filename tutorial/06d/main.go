@@ -453,10 +453,10 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "orc", "dark green", true,
+				monster = &Object{1, x, y, "o", "orc", "dark green", true,
 					&Fighter{true, 10, 10, 0, 3, AIBasic, deathMonster}}
 			} else {
-				monster = &Object{0, x, y, "T", "troll", "darker green", true,
+				monster = &Object{1, x, y, "T", "troll", "darker green", true,
 					&Fighter{true, 16, 16, 1, 4, AIBasic, deathMonster}}
 			}
 			objects = append(objects, monster)
@@ -617,6 +617,7 @@ func renderAll() {
 	use (obj *Object) draw() method with list of game objects*/
 	blt.Clear()
 	castRays()
+	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
 			if board[x][y].explored == true {
@@ -652,6 +653,7 @@ func renderAll() {
 func printUI() {
 	/* Function printUI prints player info on the bottom of screen;
 	   it's used by renderAll function*/
+	blt.Layer(0)
 	curHP := strconv.Itoa(player.curHP)
 	maxHP := strconv.Itoa(player.maxHP)
 	hp := "HP: " + curHP + "/" + maxHP
@@ -730,7 +732,7 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "player", "white", true,
+	player = &Object{2, 0, 0, "@", "player", "white", true,
 		&Fighter{true, 30, 30, 2, 5, AINone, deathPlayer}}
 	objects = append(objects, player)
 	makeMap()

@@ -329,9 +329,9 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "orc", "dark green", true}
+				monster = &Object{1, x, y, "o", "orc", "dark green", true}
 			} else {
-				monster = &Object{0, x, y, "T", "troll", "darker green", true}
+				monster = &Object{1, x, y, "T", "troll", "darker green", true}
 			}
 			objects = append(objects, monster)
 		}
@@ -489,6 +489,7 @@ func renderAll() {
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
 	castRays()
+	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
 		for x := 0; x < mapSizeX; x++ {
 			if board[x][y].explored == true {
@@ -593,7 +594,7 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "player", "white", true}
+	player = &Object{2, 0, 0, "@", "player", "white", true}
 	objects = append(objects, player)
 	makeMap()
 	gameState = playing
