@@ -564,7 +564,6 @@ func isInFOV(sx, sy, tx, ty int) bool {
 		rayY := cosBase[i]
 		x := float64(sx)
 		y := float64(sy)
-
 		for j := 0; j < fovLength; j++ {
 			x -= rayX
 			y -= rayY
