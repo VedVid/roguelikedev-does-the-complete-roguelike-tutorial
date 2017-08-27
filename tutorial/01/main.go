@@ -39,34 +39,6 @@ var (
 	playerY = windowSizeY / 2
 )
 
-type Object struct {
-	layer int
-	x, y  int
-	char  string
-	color string
-}
-
-func (obj *Object) draw() {
-	/* draw is method that prints Objects
-	   on specified positions on specified layer.*/
-	blt.Layer(obj.layer)
-	ch := "[color=" + obj.color + "]" + obj.char
-	blt.Print(obj.x, obj.y, ch)
-}
-
-func (obj *Object) clear() {
-	/* clear is method that clears area starting from coords on specific layer.*/
-	blt.Layer(obj.layer)
-	blt.ClearArea(obj.x, obj.y, 1, 1)
-}
-
-func (obj *Object) move(dx, dy int) {
-	/* move is method for handling objects movement;
-	   it receives pointer to object, and adds arguments to object values.*/
-	obj.x += dx
-	obj.y += dy
-}
-
 func handleKeys(key int) {
 	/* Function handleKeys allows to control player character
 	   by reading input from main loop.*/
