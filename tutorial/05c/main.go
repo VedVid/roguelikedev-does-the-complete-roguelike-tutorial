@@ -462,6 +462,8 @@ func isInFOV(sx, sy, tx, ty int) bool {
 
 func renderAll() {
 	/*Function renderAll handles display;
+	clears all layers of blt console, initializes raycasting,
+	and sets current layer to the bottom one;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
 	blt.Clear()

@@ -214,6 +214,7 @@ func makeMap() {
 
 func renderAll() {
 	/*Function renderAll handles display;
+	clears all layers of blt console and sets current layer to the bottom one;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
 	blt.Clear()
