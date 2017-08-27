@@ -509,6 +509,7 @@ func renderAll() {
 	/*Function renderAll handles display;
 	draws floors and walls with regard to board[x][y] *Tile, then
 	use (obj *Object) draw() method with list of game objects*/
+	blt.Clear()
 	castRays()
 	blt.Layer(0)
 	for y := 0; y < mapSizeY; y++ {
@@ -568,6 +569,7 @@ func loopOver() {
 	/*Function loopOver is main loop of the game.*/
 	playerAction := "none"
 	for {
+		renderAll()
 		blt.Refresh()
 		key := blt.Read()
 		if gameState == playing && playerAction != didntTakeTurn {
@@ -588,14 +590,12 @@ func loopOver() {
 				}
 			}
 		}
-		renderAll()
 	}
 }
 
 func main() {
 	/*Function main initializes main loop;
 	when loop breaks, closes blt console.*/
-	renderAll()
 	loopOver()
 	blt.Close()
 }
