@@ -68,8 +68,8 @@ func (obj *Object) move(dx, dy int) {
 }
 
 func handleKeys(key int) {
-	/*Function handleKeys allows to control player character
-	by reading input from main loop*/
+	/* Function handleKeys allows to control player character
+	   by reading input from main loop.*/
 	if key == blt.TK_UP {
 		player.move(0, -1)
 	} else if key == blt.TK_DOWN {

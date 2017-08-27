@@ -113,8 +113,8 @@ func createRoom(room *Rect) {
 }
 
 func horizontalTunnel(x1, x2, y int) {
-	/*Function horizontalTunnel carves passable area
-	from x1 to x2 on y row*/
+	/* Function horizontalTunnel carves passable area
+	   from x1 to x2 on y row.*/
 	for x := min(x1, x2); x < max(x1, x2)+1; x++ {
 		board[x][y].blocked = false
 		board[x][y].blocksSight = false
@@ -178,8 +178,8 @@ func renderAll() {
 }
 
 func handleKeys(key int) {
-	/*Function handleKeys allows to control player character
-	by reading input from main loop*/
+	/* Function handleKeys allows to control player character
+	   by reading input from main loop.*/
 	if key == blt.TK_UP {
 		player.move(0, -1)
 	} else if key == blt.TK_DOWN {

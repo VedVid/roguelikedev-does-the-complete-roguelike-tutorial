@@ -70,8 +70,8 @@ func (obj *Object) clear() {
 
 func (obj *Object) move(dx, dy int) {
 	/* move is method for handling objects movement.
-	   It receives pointer to object, then adds arguments to
-	   object values.*/
+	   It receives pointer to object, then checks cell for blocked field,
+	   and adds arguments to object values if tile is passable.*/
 	if board[obj.x+dx][obj.y+dy].blocked == false {
 		obj.x += dx
 		obj.y += dy
@@ -80,7 +80,7 @@ func (obj *Object) move(dx, dy int) {
 
 func makeMap() {
 	/* Function makeMap creates dungeon map by
-	   creating empty 2d array then filling it by Tiles*/
+	   creating empty 2d array then filling it by Tiles.*/
 	newMap := make([][]*Tile, mapSizeX)
 	for i := range newMap {
 		newMap[i] = make([]*Tile, mapSizeY)
@@ -122,8 +122,8 @@ func renderAll() {
 }
 
 func handleKeys(key int) {
-	/*Function handleKeys allows to control player character
-	by reading input from main loop*/
+	/* Function handleKeys allows to control player character
+	   by reading input from main loop.*/
 	if key == blt.TK_UP {
 		player.move(0, -1)
 	} else if key == blt.TK_DOWN {
