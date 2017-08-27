@@ -165,18 +165,22 @@ var (
 )
 
 type Object struct {
-	layer   int
-	x, y    int
-	char    string
-	name    string
-	color   string
-	blocks  bool
-	fighter bool
-	maxHP   int
-	curHP   int
-	defense int
-	power   int
-	ai      string
+	layer  int
+	x, y   int
+	char   string
+	name   string
+	color  string
+	blocks bool
+	*Fighter
+}
+
+type Fighter struct {
+	isFighter bool
+	maxHP     int
+	curHP     int
+	defense   int
+	power     int
+	ai        string
 }
 
 type Tile struct {
@@ -389,11 +393,11 @@ func placeObjects(room *Rect) {
 		y := randIntRange(room.y+1, room.y+room.h)
 		if isBlocked(x, y) == false {
 			if rand.Intn(100+1) <= 80 {
-				monster = &Object{0, x, y, "o", "orc", "dark green", true, true,
-					10, 10, 0, 3, AIBasic}
+				monster = &Object{0, x, y, "o", "orc", "dark green", true,
+					&Fighter{true, 10, 10, 0, 3, AIBasic}}
 			} else {
 				monster = &Object{0, x, y, "T", "troll", "darker green", true,
-					true, 16, 16, 1, 4, AIBasic}
+					&Fighter{true, 16, 16, 1, 4, AIBasic}}
 			}
 			objects = append(objects, monster)
 		}
@@ -655,7 +659,8 @@ func init() {
 	blt.Set("palette: colorLightWall = #826E32, colorDarkWall = #000064, " +
 		"colorLightGround = #C8B432, colorDarkGround = #323296")
 	blt.Clear()
-	player = &Object{1, 0, 0, "@", "player", "white", true, true, 30, 30, 2, 5, AINone}
+	player = &Object{1, 0, 0, "@", "player", "white", true,
+		&Fighter{true, 30, 30, 2, 5, AINone}}
 	objects = append(objects, player)
 	makeMap()
 	gameState = playing
