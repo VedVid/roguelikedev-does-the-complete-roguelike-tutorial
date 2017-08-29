@@ -46,6 +46,10 @@ const (
 	fovLength    = 5
 	fovStep      = 3
 
+	barWidth    = 20
+	panelHeight = 7
+	panelY      = windowSizeY - panelHeight
+
 	exit          = "exit"
 	takeTurn      = "take-turn"
 	didntTakeTurn = "didnt-take-turn"
@@ -661,10 +665,30 @@ func printUI() {
 	/* Function printUI prints player info on the bottom of screen;
 	   it's used by renderAll function.*/
 	blt.Layer(0)
+	renderBar(1, 1+panelY, barWidth, player.curHP, player.maxHP, "HP",
+		"light red", "darker red")
+}
+
+func renderBar(x, y, width, value, maximum int, name, barColor, backColor string) {
+	/*Function renderBar...*/
+	blt.Layer(0)
+	barCol, backCol := blt.ColorFromName(barColor), blt.ColorFromName(backColor)
+	v, m, w := float64(value), float64(maximum), float64(width)
+	curBarWidth := round64ToInt(v / m * w)
+	blt.BkColor(backCol)
+	for i := 0; i < width; i++ {
+		blt.Print(x+i, y, " ")
+	}
+	blt.BkColor(barCol)
+	for i := 0; i < curBarWidth; i++ {
+		blt.Print(x+i, y, " ")
+	}
 	curHP := strconv.Itoa(player.curHP)
 	maxHP := strconv.Itoa(player.maxHP)
-	hp := "HP: " + curHP + "/" + maxHP
-	blt.Print(1, windowSizeY-2, hp)
+	str := "[align=center][color=white]HP: " + curHP + "/" + maxHP
+	blt.Layer(1)
+	blt.Print(barWidth/2, y, str)
+	blt.BkColor(blt.ColorFromName("black"))
 }
 
 func handleKeys(key int) string {
